@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+<title>Vidyst Win Port</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ------------------------------------------------------------- top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="mark">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 7h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4z"/>
+          <path d="M17 10.5 21 8v8l-4-2.5z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">Vidyst <span class="tag">WIN PORT</span></div>
+        <div class="brand-sub" id="sceneSummary">Just me</div>
+      </div>
+    </div>
+
+    <div class="chips" id="canvasChips">
+      <button class="chip" data-mode="wide"><span class="box"></span>Horizontal&nbsp;<b>16:9</b></button>
+      <button class="chip" data-mode="tall"><span class="box"></span>Vertical&nbsp;<b>9:16</b></button>
+      <button class="chip active" data-mode="both"><span class="box"></span>Horizontal + Vertical</button>
+    </div>
+
+    <div class="top-actions">
+      <span class="dots" id="destDots"></span>
+      <span class="on-count" id="onCount">0 of 0 on</span>
+      <span class="timer" id="timer" hidden>00:00:00</span>
+      <span class="live-pill" id="livePill" hidden><i></i>LIVE</span>
+      <button class="rec-btn" id="btnRecord" title="Toggle recording"><span class="rec-dot"></span>Record</button>
+      <button class="golive" id="btnLive">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="2.5"/>
+          <path d="M7.5 7.5a6 6 0 0 0 0 9M16.5 16.5a6 6 0 0 0 0-9"/>
+        </svg>
+        Go Live
+      </button>
+    </div>
+  </header>
+
+  <!-- --------------------------------------------------------------- body -->
+  <div class="content">
+
+    <main class="stage-area">
+      <div class="stage" id="stage">
+        <div class="stage-toast" id="stageToast" hidden></div>
+        <div class="canvas-col" id="colWide">
+          <div class="canvas-card" id="cardWide">
+            <img id="prevWide" alt="" hidden />
+            <div class="canvas-empty" id="emptyWide">
+              <div class="spinner" hidden id="spinWide"></div>
+              <span>Render a preview to see the horizontal canvas</span>
+            </div>
+            <div class="canvas-tag" id="badgeWide" hidden><i></i>LIVE</div>
+          </div>
+          <div class="canvas-label"><span class="label-main">Horizontal 16:9</span><span class="label-sub" id="labelWide">—</span></div>
+        </div>
+
+        <div class="canvas-col" id="colTall">
+          <div class="canvas-card" id="cardTall">
+            <img id="prevTall" alt="" hidden />
+            <div class="canvas-empty" id="emptyTall">
+              <div class="spinner" hidden id="spinTall"></div>
+              <span>Render a preview to see the vertical canvas</span>
+            </div>
+            <div class="canvas-tag" id="badgeTall" hidden><i></i>LIVE</div>
+          </div>
+          <div class="canvas-label"><span class="label-main">Vertical 9:16</span><span class="label-sub" id="labelTall">—</span></div>
+        </div>
+      </div>
+
+      <div class="dock">
+        <div class="dock-scroll" id="dock"></div>
+      </div>
+    </main>
+
+    <aside class="side" id="side"></aside>
+
+  </div>
+
+  <!-- ---------------------------------------------------------- log drawer -->
+  <div class="logdrawer" id="logDrawer" hidden>
+    <div class="log-head"><span>Log</span><button class="linkbtn" id="btnClearLog">clear</button></div>
+    <pre id="log"></pre>
+  </div>
+
+  <!-- ------------------------------------------------------------ toolbar -->
+  <footer class="toolbar">
+    <button class="tool active" data-tab="program">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 12h8M12 8v8"/></svg>
+      Program
+    </button>
+    <button class="tool" data-tab="destinations">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg>
+      Destinations
+    </button>
+    <button class="tool" data-tab="sources">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="13" height="12" rx="2"/><path d="M15 10.5 22 7v10l-7-3.5z"/></svg>
+      Sources
+    </button>
+    <button class="tool" data-tab="audio">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+      Audio
+    </button>
+    <button class="tool" data-tab="settings">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+      Settings
+    </button>
+    <div class="spacer"></div>
+    <button class="tool" id="btnLog">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+      Log
+    </button>
+    <span class="healthy" id="healthy"><i></i> Healthy</span>
+  </footer>
+
+</div>
+
+<!-- ------------------------------------------------------------ go-live sheet -->
+<div class="backdrop" id="modal" hidden>
+  <div class="sheet">
+    <div class="sheet-head">
+      <div>
+        <div class="sheet-title" id="sheetTitle">Go live</div>
+        <div class="sheet-sub" id="sheetSub">One take, every destination.</div>
+      </div>
+      <button class="xbtn" id="sheetClose">✕</button>
+    </div>
+
+    <div class="sheet-body">
+      <div class="sheet-col">
+        <div class="col-label">Destinations</div>
+        <div class="sheet-dests" id="sheetDests"></div>
+        <div class="hint" id="sheetEmptyHint" hidden>No destinations configured yet — add one in the Destinations panel.</div>
+      </div>
+
+      <div class="sheet-col right">
+        <div class="col-label">Session</div>
+        <div class="summary" id="sheetSummary"></div>
+        <div class="col-label" style="margin-top:16px">Layout</div>
+        <div class="summary" id="sheetLayout"></div>
+      </div>
+    </div>
+
+    <div class="sheet-foot">
+      <div class="foot-note" id="sheetNote"></div>
+      <div class="foot-actions">
+        <button class="btn ghost" id="sheetCancel">Cancel</button>
+        <button class="btn primary" id="sheetGo">Go Live</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+{
+  "name": "vidyst-win-port",
+  "version": "0.1.0",
+  "description": "Vidyst-style simulcast studio for Windows",
+  "main": "src/main.js",
+  "author": "local",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable"
+  },
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8",
+    "playwright-core": "^1.64.1"
+  },
+  "build": {
+    "appId": "com.vidyst.winport",
+    "productName": "VidystWinPort",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "vendor/ffmpeg",
+        "to": "ffmpeg",
+        "filter": [
+          "ffmpeg.exe"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "VidystWinPort.exe"
+    },
+    "portable": {
+      "artifactName": "VidystWinPort.exe",
+      "requestExecutionLevel": "user"
+    },
+    "compression": "normal"
+  }
+}

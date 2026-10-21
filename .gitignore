@@ -1,0 +1,20 @@
+# dependencies and build output
+node_modules/
+dist/
+
+# local test artifacts and screenshots (may contain the desktop/camera)
+test/out/
+test/screenshots/
+test/*.png
+test screenshots/
+
+# bundled binary, downloads and reference material (too large / not ours)
+vendor/ffmpeg/
+tools/
+video/
+*.mp4
+*.log
+
+# OS noise
+Thumbs.db
+.DS_Store
