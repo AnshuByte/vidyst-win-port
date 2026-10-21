@@ -6,6 +6,8 @@ Built from scratch — Vidyst ships as an arm64-only macOS app (Swift + AppKit +
 camera extension), so there is no code to port. This is a behavioural reimplementation of the
 part that matters: multi-destination live output with a wide and a tall canvas from one take.
 
+**Download:** grab the portable build from the [latest release](https://github.com/AnshuByte/vidyst-win-port/releases/latest).
+
 ---
 
 ## Quick start
